@@ -34,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${syne.variable} ${spaceMono.variable}`}>
-      <body className="font-display antialiased">
+      <body className="font-display antialiased cursor-none md:cursor-none">
         {/* Blue radial glow backgrounds */}
         <div className="radial-glow-bg" aria-hidden="true" />
         <div className="radial-glow-secondary" aria-hidden="true" />
@@ -44,6 +44,8 @@ export default function RootLayout({
 
         {/* Film grain overlay */}
         <div className="film-grain" aria-hidden="true" />
+        {/* Noise overlay */}
+        <div className="noise-overlay" aria-hidden="true" />
       </body>
     </html>
   );

@@ -136,31 +136,36 @@ export function FeatureGrid() {
 // STATS SECTION
 // ============================================
 const stats = [
-  { value: '10M+', label: 'Active Users' },
-  { value: '99.9%', label: 'Uptime SLA' },
-  { value: '150+', label: 'Countries' },
-  { value: '24/7', label: 'Support' },
+  { value: '10', suffix: 'M+', label: 'Active Users' },
+  { value: '99.9', suffix: '%', label: 'Uptime SLA' },
+  { value: '150', suffix: '+', label: 'Countries' },
+  { value: '24', suffix: '/7', label: 'Support' },
 ];
 
 export function StatsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const countersRef = useRef<{ value: number }[]>([]);
 
   useGSAP(
     () => {
       const statItems = containerRef.current?.querySelectorAll('.stat-item');
-      if (!statItems) return;
+      const statNumbers = containerRef.current?.querySelectorAll('.stat-number-animated');
+      if (!statItems || !statNumbers) return;
 
+      // Animate stat items entrance
       statItems.forEach((item, index) => {
         gsap.fromTo(
           item,
           {
             opacity: 0,
             scale: 0.8,
+            y: 30,
           },
           {
             opacity: 1,
             scale: 1,
-            duration: 0.6,
+            y: 0,
+            duration: 0.8,
             ease: 'back.out(1.7)',
             scrollTrigger: {
               trigger: item,
@@ -171,6 +176,31 @@ export function StatsSection() {
           }
         );
       });
+
+      // Counter animation
+      stats.forEach((stat, index) => {
+        const element = statNumbers[index];
+        if (!element) return;
+
+        const counter = { value: 0 };
+        countersRef.current[index] = counter;
+        const endValue = parseFloat(stat.value);
+
+        gsap.to(counter, {
+          value: endValue,
+          duration: 2.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+          onUpdate: () => {
+            const decimals = stat.value.includes('.') ? 1 : 0;
+            element.textContent = counter.value.toFixed(decimals) + stat.suffix;
+          },
+        });
+      });
     },
     { scope: containerRef }
   );
@@ -180,15 +210,22 @@ export function StatsSection() {
       {/* Decorative line */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-transparent via-electric-blue/30 to-transparent" />
 
-      <div className="max-w-7xl mx-auto">
+      {/* Background glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-electric-blue/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-          {stats.map((stat) => (
+          {stats.map((stat, index) => (
             <div
               key={stat.label}
-              className="stat-item text-center p-6 rounded-2xl hover:bg-electric-blue/5 transition-colors"
+              className="stat-item text-center p-8 rounded-3xl border border-white/5 hover:border-electric-blue/20 hover:bg-electric-blue/5 transition-all duration-300 group"
             >
-              <div className="stat-number">{stat.value}</div>
-              <div className="font-mono text-xs text-near-white/40 mt-3 uppercase tracking-widest">
+              <div className="stat-number stat-number-animated tabular-nums">
+                0{stat.suffix}
+              </div>
+              <div className="font-mono text-xs text-near-white/40 mt-4 uppercase tracking-widest group-hover:text-near-white/60 transition-colors">
                 {stat.label}
               </div>
             </div>
