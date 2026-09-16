@@ -2,6 +2,10 @@
 
 A production-ready Next.js website featuring a cinematic scroll-driven 3D animation hero section, inspired by [Adaline.ai](https://www.adaline.ai) and Apple's product pages.
 
+## Status
+
+Last reviewed: September 2026 · release v2026.09
+
 ## How It Works
 
 The effect is achieved by:
