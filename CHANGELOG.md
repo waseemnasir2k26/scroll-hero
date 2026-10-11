@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented in this file.
 
+## [2026.10] - 2026-10-12
+
+- scroll-hero is a public Next.js site whose hero is a scroll-driven 3D animation: a JPEG frame sequence scrubbed on a canvas by GSAP ScrollTrigger while the section is pinned. TypeScript, Tailwind, with a SCROLL-ANIMATION-GUIDE.md.
+- State: still in placeholder mode; public/frames/ contains only .gitkeep, so the hero runs the procedural starfield fallback and the real rendered frames have never been committed.
+- Re-reviewed October 2026: README, file tree and commit history re-read; documentation and version metadata only, no code changes. External links (GSAP ScrollTrigger docs, Google Fonts pages, Squoosh, Vercel, the Adaline.ai inspiration link) all returned HTTP 200.
+- README has an MIT License section but the repo had no LICENSE file; a standard MIT LICENSE was added in this release.
+- Known gaps: no CI workflow.
+
 ## [2026.09] - 2026-09-16
 
 - Maintenance review of scroll-hero — a Next.js site whose hero is a cinematic scroll-driven 3D animation: a pre-rendered JPEG frame sequence scrubbed on a `<canvas>` by GSAP ScrollTrigger while the section is pinned.
